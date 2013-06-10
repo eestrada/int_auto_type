@@ -1,0 +1,23 @@
+# Compiled object files
+*.slo
+*.lo
+*.o
+
+# Compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled static libraries
+*.lai
+*.la
+*.a
+
+# Executable binaries
+*.bin
+*.exe
+
+# Temp files
+*.swp
+*~
+
