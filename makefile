@@ -1,16 +1,16 @@
 CXX ?= c++
-CXXFLAGS = -std=c++11 -pedantic -g -Wall -I./ -I./inc/ -I./src/
+CXXFLAGS := -std=c++11 -pedantic -g -Wall -I./ -I./inc/ -I./src/
 
-BINDIR = ./bin
-OBJDIR = ./obj
-SRCDIR = ./src
-INCDIR = ./inc
+BINDIR := ./bin
+OBJDIR := ./obj
+SRCDIR := ./src
+INCDIR := ./inc
 
-BIN = $(BINDIR)/test.bin
-ARGS = 
+BIN := $(BINDIR)/test.bin
+ARGS := 
 
-SRCS =  $(wildcard $(SRCDIR)/*.cpp)
-INCS =  $(wildcard $(INCDIR)/*.h*)
+SRCS :=  $(wildcard $(SRCDIR)/*.cpp)
+INCS :=  $(wildcard $(INCDIR)/*.h*)
 
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 OBJS := $(patsubst $(SRCDIR)%,$(OBJDIR)%,$(OBJS))
@@ -19,15 +19,14 @@ OBJS := $(patsubst $(SRCDIR)%,$(OBJDIR)%,$(OBJS))
 .PHONY : run test clean memcheck
 
 run : $(BIN)
-	./$(BIN) $(ARGS)
+	$(BIN) $(ARGS)
 
 test : clean memcheck
 
 clean :
 	@ echo "Removing generated files"
-	rm -rf obj
-	rm -rf bin
-	@ echo
+	rm -rf $(OBJDIR)
+	rm -rf $(BINDIR)
 
 memcheck : $(BIN)
 	@ echo "Running valgrind to check for memory leaks"
@@ -37,7 +36,7 @@ memcheck : $(BIN)
 
 $(BIN) : $(OBJS) $(SRCS) $(INCS)
 	@ echo "Compiling binary"
-	@- mkdir -p bin
+	@- mkdir -p $(BINDIR)
 	$(CXX) -o $@ $(OBJS) $(CXXFLAGS)
 	@ echo
 
