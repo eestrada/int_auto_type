@@ -1,7 +1,9 @@
 #ifndef _INTAUTO_HPP_
 #define _INTAUTO_HPP_
 
+#include <cstdint>
 #include <stdexcept>
+#include <vector>
 
 namespace iat
 {
@@ -9,6 +11,15 @@ namespace iat
 class intauto_t
 {
 public:
+    /*
+     * Typedefs
+     */
+    typedef std::vector<bool> bit_container;
+public:
+
+    /*
+     * Constructors
+     */
     intauto_t() throw(std::bad_alloc);
 
     intauto_t(const intauto_t &other) throw(std::runtime_error);
@@ -16,23 +27,120 @@ public:
     template < typename N >
     intauto_t(const N &other) throw(std::runtime_error);
 
+    /*
+     * Destructor
+     */
     ~intauto_t() noexcept;
 
+    /*
+     * Assignment operations
+     */
     intauto_t & operator=(const intauto_t &other);
 
     template < typename N >
     intauto_t & operator=(const N &other);
 
-    intauto_t operator+(const intauto_t &other);
+    /*
+     * Bitwise operations
+     */
+    intauto_t & operator<<=(const intauto_t &other);
 
-    intauto_t operator-(const intauto_t &other);
+    template < typename N >
+    intauto_t & operator<<=(const N &other);
 
-    intauto_t operator*(const intauto_t &other);
+    intauto_t operator<<(const intauto_t &other) const;
 
-    intauto_t operator/(const intauto_t &other);
+    template < typename N >
+    intauto_t operator<<(const N &other) const;
+
+    intauto_t & operator>>=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator>>=(const N &other);
+
+    intauto_t operator>>(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator>>(const N &other) const;
+
+    intauto_t & operator&=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator&=(const N &other);
+
+    intauto_t operator&(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator&(const N &other) const;
+
+    intauto_t & operator|=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator|=(const N &other);
+
+    intauto_t operator|(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator|(const N &other) const;
+
+    intauto_t & operator^=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator^=(const N &other);
+
+    intauto_t operator^(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator^(const N &other) const;
+
+    /* Unary Invert. ie, NOT */
+    intauto_t operator~() const;
+
+    /*
+     * Arithmetic operations
+     */
+    intauto_t & operator+=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator+=(const N &other);
+
+    intauto_t operator+(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator+(const N &other) const;
+
+    intauto_t & operator-=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator-=(const N &other);
+
+    intauto_t operator-(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator-(const N &other) const;
+
+    intauto_t & operator*=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator*=(const N &other);
+
+    intauto_t operator*(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator*(const N &other) const;
+
+    intauto_t & operator/=(const intauto_t &other);
+
+    template < typename N >
+    intauto_t & operator/=(const N &other);
+
+    intauto_t operator/(const intauto_t &other) const;
+
+    template < typename N >
+    intauto_t operator/(const N &other) const;
 private:
 
-    char *data;
+    bit_container data;
 };
 
 } //End iat namespace
