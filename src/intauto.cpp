@@ -10,11 +10,10 @@ intauto_t::intauto_t() throw(std::bad_alloc)
 
 intauto_t::intauto_t(const intauto_t &other) throw(std::runtime_error)
 {
-    throw std::runtime_error("intauto_t not implemented");
+    this->data = other.data;
 }
 
-template < typename N >
-intauto_t::intauto_t(const N &other) throw(std::runtime_error)
+intauto_t::intauto_t(const intmax_t &other) throw(std::runtime_error)
 {
     throw std::runtime_error("intauto_t not implemented");
 }
