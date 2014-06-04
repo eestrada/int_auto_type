@@ -4,9 +4,13 @@
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
+#include <ostream>
 
-namespace iat
-{
+#define _INTAUTO_NAMESPACE_ std 
+#define _INTAUTO_NAMESPACE_START_ namespace _INTAUTO_NAMESPACE_ {
+#define _INTAUTO_NAMESPACE_END_ }
+
+_INTAUTO_NAMESPACE_START_
 
 class intauto_t
 {
@@ -14,7 +18,7 @@ public:
     /*
      * Typedefs
      */
-    typedef std::vector<bool> bit_container;
+    typedef std::vector<uintmax_t> bit_container;
 public:
 
     /*
@@ -22,9 +26,11 @@ public:
      */
     intauto_t() throw(std::bad_alloc);
 
-    intauto_t(const intauto_t &other) throw(std::runtime_error);
-
     intauto_t(const intmax_t &other) throw(std::runtime_error);
+
+    intauto_t(const intauto_t &other) = default;
+
+    intauto_t(intauto_t &&other) = default;
 
     /*
      * Destructor
@@ -34,10 +40,10 @@ public:
     /*
      * Assignment operations
      */
-    intauto_t & operator=(const intauto_t &other);
+    intauto_t & operator=(const intauto_t &other) = default;
+    intauto_t & operator=(intauto_t &&other) = default;
 
-    template < typename N >
-    intauto_t & operator=(const N &other);
+    intauto_t & operator=(const intmax_t &other);
 
     /*
      * Bitwise operations
@@ -173,11 +179,25 @@ public:
 
     template < typename N >
     intauto_t operator%(const N &other) const;
-private:
+
+    const bit_container & get_data() const;
+protected:
 
     bit_container data;
 };
 
-} //End iat namespace
+_INTAUTO_NAMESPACE_END_
+
+inline ::std::ostream & operator<<(::std::ostream &out, const _INTAUTO_NAMESPACE_::intauto_t &iat)
+{
+    const _INTAUTO_NAMESPACE_::intauto_t::bit_container data = iat.get_data();
+    for(auto i = data.rbegin(); i != data.rend(); ++i)
+    {
+        const uintmax_t * u = &(*i);
+        const intmax_t * s = reinterpret_cast<const intmax_t *>(u);
+        out << *s; 
+    }
+    return out;
+}
 
 #endif //defined _INTAUTO_HPP_
